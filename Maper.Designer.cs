@@ -48,7 +48,7 @@
 			this.txtFilePath.Name = "txtFilePath";
 			this.txtFilePath.Size = new System.Drawing.Size(487, 20);
 			this.txtFilePath.TabIndex = 1;
-			this.txtFilePath.Text = "D:\\Steam\\steamapps\\common\\Celeste\\Content\\Maps\\1-ForsakenCity.bin";
+			this.txtFilePath.Text = "D:\\Steam\\steamapps\\common\\Celeste\\Content\\Maps\\2-OldSite.bin";
 			// 
 			// map
 			// 
@@ -62,7 +62,7 @@
 			this.map.TabIndex = 2;
 			this.map.TabStop = false;
 			// 
-			// MapMaker
+			// Maper
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -71,7 +71,7 @@
 			this.Controls.Add(this.map);
 			this.Controls.Add(this.txtFilePath);
 			this.Controls.Add(this.btnLoad);
-			this.Name = "MapMaker";
+			this.Name = "Maper";
 			this.ShowIcon = false;
 			this.Text = "Celeste Map Maker";
 			((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();

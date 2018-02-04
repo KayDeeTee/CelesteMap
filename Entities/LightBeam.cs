@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CelesteMap.Utility;
 using System.Drawing;
 using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class LightBeam : Entity {
 		public int Width, Height;
@@ -26,24 +25,20 @@ namespace CelesteMap.Entities {
 		}
 		public override void Render(Graphics map, VirtualMap<char> solids) {
 			Bitmap img = Gameplay.GetImage("util/lightbeam");
+			img.Save("light.png");
 			if (img == null) { return; }
 
-			float rotation = Rotation + 180;
-			Vector2 move = new Vector2(-Height / 2, 0);
+			float rotation = Rotation + 90;
 			if (rotation == 90) {
 				img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-				move = new Vector2(0, -Height / 2);
 			} else if (rotation == 180) {
 				img.RotateFlip(RotateFlipType.Rotate180FlipNone);
-				move = new Vector2(Height / 2, 0);
 			} else if (rotation == 270) {
 				img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-				move = new Vector2(0, Height / 2);
 			}
 
-			move += Position;
-			map.DrawImage(img, move.X, move.Y, 1f / img.Width * Height, Width);
-			map.DrawImage(img, Position.X - Width / 2, Position.Y - Height / 2, img.Width * Height, Width);
+			map.DrawImage(img, Position.X - Width / 2, Position.Y, Width, Height);
+			img.Dispose();
 		}
 	}
 }

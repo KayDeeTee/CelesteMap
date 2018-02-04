@@ -33,7 +33,7 @@ namespace CelesteMap.Utility {
 
 			Rectangle viewport = new Rectangle(0, 0, chapterBounds.Width, chapterBounds.Height);
 			//Rectangle viewport = new Rectangle(250, 3000, 300, 200);
-			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_2");
+			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_d3");
 			Bitmap chapter = new Bitmap(viewport.Width, viewport.Height, PixelFormat.Format32bppArgb);
 			XmlNode bgs = xmlMap.SelectSingleNode(".//Style/Backgrounds");
 			XmlNode fgs = xmlMap.SelectSingleNode(".//Style/Foregrounds");
@@ -70,7 +70,7 @@ namespace CelesteMap.Utility {
 				using (Bitmap map = tiles.DisplayMap(Backdrop.CreateBackdrops(bgs), new Rectangle(pos, chapterBounds.Size), true)) {
 					OverlayDecals(level.SelectNodes(".//bgdecals/decal"), map);
 					tiles = GenerateLevelTiles(level, "solids", widthTiles, heightTiles, foreground, out solids);
-					OverlayEntities(level.SelectSingleNode(".//entities"), map, solids);
+					OverlayEntities(level.SelectSingleNode(".//entities"), map, solids, true);
 					Util.CopyTo(chapter, map, offset);
 				}
 
@@ -86,6 +86,7 @@ namespace CelesteMap.Utility {
 				tiles.Overlay(level, "fgtiles", widthTiles, heightTiles, scenery);
 				using (Bitmap map = tiles.DisplayMap(Backdrop.CreateBackdrops(fgs), new Rectangle(pos, chapterBounds.Size), false)) {
 					OverlayDecals(level.SelectNodes(".//fgdecals/decal"), map);
+					OverlayEntities(level.SelectSingleNode(".//entities"), map, solids, false);
 					Util.CopyTo(chapter, map, offset);
 				}
 
@@ -110,58 +111,86 @@ namespace CelesteMap.Utility {
 			}
 			return chapter;
 		}
-		private void OverlayEntities(XmlNode entities, Bitmap map, VirtualMap<char> solids) {
+		private void OverlayEntities(XmlNode entities, Bitmap map, VirtualMap<char> solids, bool background) {
 			using (Graphics g = Graphics.FromImage(map)) {
 				List<Entity> ents = new List<Entity>();
 				foreach (XmlNode child in entities) {
 					Entity entity = null;
 					if (child.Name.IndexOf("spikes", StringComparison.OrdinalIgnoreCase) == 0) {
-						entity = Spikes.FromElement(child);
+						entity = background ? Spikes.FromElement(child) : null;
 					} else if (child.Name.IndexOf("strawberry", StringComparison.OrdinalIgnoreCase) == 0) {
-						entity = Strawberry.FromElement(child);
+						entity = background ? Strawberry.FromElement(child) : null;
 					} else if (child.Name.Equals("goldenBerry", StringComparison.OrdinalIgnoreCase)) {
-						entity = Strawberry.FromElement(child);
+						entity = background ? Strawberry.FromElement(child) : null;
 					} else if (child.Name.Equals("bonfire", StringComparison.OrdinalIgnoreCase)) {
-						entity = Bonfire.FromElement(child);
+						entity = background ? Bonfire.FromElement(child) : null;
 					} else if (child.Name.Equals("jumpThru", StringComparison.OrdinalIgnoreCase)) {
-						entity = JumpThru.FromElement(child);
+						entity = background ? JumpThru.FromElement(child) : null;
 					} else if (child.Name.Equals("memorial", StringComparison.OrdinalIgnoreCase)) {
-						entity = Memorial.FromElement(child);
+						entity = background ? Memorial.FromElement(child) : null;
 					} else if (child.Name.Equals("player", StringComparison.OrdinalIgnoreCase)) {
-						entity = PlayerSpawn.FromElement(child);
+						entity = background ? PlayerSpawn.FromElement(child) : null;
 					} else if (child.Name.Equals("zipMover", StringComparison.OrdinalIgnoreCase)) {
-						entity = ZipMover.FromElement(child);
+						entity = background ? ZipMover.FromElement(child) : null;
 					} else if (child.Name.Equals("wire", StringComparison.OrdinalIgnoreCase)) {
-						entity = Wire.FromElement(child);
+						entity = background ? Wire.FromElement(child) : null;
 					} else if (child.Name.Equals("crumbleBlock", StringComparison.OrdinalIgnoreCase)) {
-						entity = CrumbleBlock.FromElement(child);
+						entity = background ? CrumbleBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("refill", StringComparison.OrdinalIgnoreCase)) {
-						entity = Refill.FromElement(child);
+						entity = background ? Refill.FromElement(child) : null;
 					} else if (child.Name.Equals("spring", StringComparison.OrdinalIgnoreCase)) {
-						entity = Spring.FromElement(child);
+						entity = background ? Spring.FromElement(child) : null;
 					} else if (child.Name.Equals("fakeWall", StringComparison.OrdinalIgnoreCase)) {
-						entity = FakeWall.FromElement(child);
+						entity = background ? FakeWall.FromElement(child) : null;
+					} else if (child.Name.Equals("exitBlock", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? FakeWall.FromElement(child) : null;
 					} else if (child.Name.Equals("lightBeam", StringComparison.OrdinalIgnoreCase)) {
-						entity = LightBeam.FromElement(child);
+						entity = background ? LightBeam.FromElement(child) : null;
 					} else if (child.Name.Equals("cassette", StringComparison.OrdinalIgnoreCase)) {
-						entity = Cassette.FromElement(child);
+						entity = background ? Cassette.FromElement(child) : null;
 					} else if (child.Name.Equals("flutterBird", StringComparison.OrdinalIgnoreCase)) {
-						entity = FlutterBird.FromElement(child);
+						entity = background ? FlutterBird.FromElement(child) : null;
 					} else if (child.Name.Equals("checkpoint", StringComparison.OrdinalIgnoreCase)) {
-						entity = Checkpoint.FromElement(child);
+						entity = background ? Checkpoint.FromElement(child) : null;
 					} else if (child.Name.Equals("fallingBlock", StringComparison.OrdinalIgnoreCase)) {
-						entity = FallingBlock.FromElement(child);
+						entity = background ? FallingBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("cassetteBlock", StringComparison.OrdinalIgnoreCase)) {
-						//entity = CassetteBlock.FromElement(child);
+						//entity = background ? CassetteBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("dashBlock", StringComparison.OrdinalIgnoreCase)) {
-						entity = DashBlock.FromElement(child);
+						entity = background ? DashBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("coverupWall", StringComparison.OrdinalIgnoreCase)) {
-						entity = CoverupWall.FromElement(child);
+						entity = background ? CoverupWall.FromElement(child) : null;
 					} else if (child.Name.Equals("npc", StringComparison.OrdinalIgnoreCase)) {
-						entity = NPC.FromElement(child);
+						entity = background ? NPC.FromElement(child) : null;
 					} else if (child.Name.Equals("birdForsakenCityGem", StringComparison.OrdinalIgnoreCase)) {
-						entity = ForsakenCityGem.FromElement(child);
-					} else {
+						entity = background ? ForsakenCityGem.FromElement(child) : null;
+					} else if (child.Name.Equals("floatingDebris", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? FloatingDebris.FromElement(child) : null;
+					} else if (child.Name.Equals("hangingLamp", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? HangingLamp.FromElement(child) : null;
+					} else if (child.Name.Equals("heartGem", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? HeartGem.FromElement(child) : null;
+					} else if (child.Name.Equals("blackGem", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? HeartGem.FromElement(child) : null;
+					} else if (child.Name.Equals("dreamMirror", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? DreamMirror.FromElement(child) : null;
+					} else if (child.Name.Equals("darkChaser", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? DarkChaser.FromElement(child) : null;
+					} else if (child.Name.Equals("dreamBlock", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? DreamBlock.FromElement(child) : null;
+					} else if (child.Name.Equals("touchSwitch", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? TouchSwitch.FromElement(child) : null;
+					} else if (child.Name.Equals("switchGate", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? SwitchGate.FromElement(child) : null;
+					} else if (child.Name.Equals("invisibleBarrier", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? InvisibleBarrier.FromElement(child) : null;
+					} else if (child.Name.Equals("payphone", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? Payphone.FromElement(child) : null;
+					} else if (child.Name.Equals("towerViewer", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? TowerViewer.FromElement(child) : null;
+					} else if (child.Name.Equals("foregroundDebris", StringComparison.OrdinalIgnoreCase)) {
+						entity = !background ? ForegroundDebris.FromElement(child) : null;
+					} else if (background) {
 						Console.WriteLine(child.Name);
 					}
 					if (entity != null) {

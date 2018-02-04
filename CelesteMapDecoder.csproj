@@ -51,12 +51,23 @@
     <Compile Include="Entities\CassetteBlock.cs" />
     <Compile Include="Entities\Checkpoint.cs" />
     <Compile Include="Entities\CoverupWall.cs" />
+    <Compile Include="Entities\DarkChaser.cs" />
     <Compile Include="Entities\DashBlock.cs" />
+    <Compile Include="Entities\DreamBlock.cs" />
+    <Compile Include="Entities\DreamMirror.cs" />
     <Compile Include="Entities\FallingBlock.cs" />
+    <Compile Include="Entities\FloatingDebris.cs" />
     <Compile Include="Entities\FlutterBird.cs" />
+    <Compile Include="Entities\ForegroundDebris.cs" />
     <Compile Include="Entities\ForsakenCityGem.cs" />
+    <Compile Include="Entities\HangingLamp.cs" />
     <Compile Include="Entities\HeartGem.cs" />
+    <Compile Include="Entities\InvisibleBarrier.cs" />
     <Compile Include="Entities\NPC.cs" />
+    <Compile Include="Entities\Payphone.cs" />
+    <Compile Include="Entities\SwitchGate.cs" />
+    <Compile Include="Entities\TouchSwitch.cs" />
+    <Compile Include="Entities\TowerViewer.cs" />
     <Compile Include="Utility\AutoTiler.cs" />
     <Compile Include="Backdrops\Backdrop.cs" />
     <Compile Include="Backdrops\CoreStarsFG.cs" />
@@ -98,6 +109,7 @@
       <DependentUpon>Maper.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Rand.cs" />
     <Compile Include="Utility\RunLengthEncoding.cs" />
     <Compile Include="Utility\Sprite.cs" />
     <Compile Include="Utility\Texture.cs" />

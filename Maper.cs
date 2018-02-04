@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -7,7 +8,7 @@ using CelesteMap.Utility;
 namespace CelesteMap {
 	public partial class Maper : Form {
 		private Gameplay gameplay;
-		
+
 		[STAThread]
 		static void Main() {
 			Application.EnableVisualStyles();
@@ -37,6 +38,20 @@ namespace CelesteMap {
 			}
 		}
 		private void DecodeMap() {
+
+			//string paths = @"D:\Steam\steamapps\common\Celeste\Content\Maps\";
+			//string[] files = Directory.GetFiles(paths, "*.bin", SearchOption.AllDirectories);
+			//Stopwatch sw = new Stopwatch();
+			//sw.Start();
+			//for (int i = files.Length - 1; i >= 0; i--) {
+			//	string file = files[i];
+			//	string fileName = Path.GetFileNameWithoutExtension(file);
+			//	string xmlName = fileName + ".xml";
+			//	MapCoder.ToXML(file);
+			//}
+			//sw.Stop();
+			//Console.WriteLine(sw.Elapsed.TotalSeconds);
+
 			string fileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
 			string xmlName = fileName + ".xml";
 			MapCoder.ToXML(txtFilePath.Text, xmlName);

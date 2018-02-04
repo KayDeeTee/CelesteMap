@@ -11,7 +11,7 @@ namespace CelesteMap.Utility {
 	public static class Util {
 		[DllImport("Kernel32.dll")]
 		private extern static void CopyMemory(IntPtr dest, IntPtr src, uint length);
-		public static Random Random = new Random();
+		public static Rand Random = new Rand();
 		public static Bitmap GetSubImage(Bitmap parent, Sprite bounds) {
 			BitmapData parentData = parent.LockBits(bounds.Bounds, ImageLockMode.ReadOnly, parent.PixelFormat);
 			try {
@@ -135,25 +135,25 @@ namespace CelesteMap.Utility {
 		public static float Clamp(float value, float min, float max) {
 			return Math.Min(Math.Max(value, min), max);
 		}
-		public static T Choose<T>(this Random random, T a, T b) {
+		public static T Choose<T>(this Rand random, T a, T b) {
 			return GiveMe<T>(random.Next(2), a, b);
 		}
-		public static T Choose<T>(this Random random, T a, T b, T c) {
+		public static T Choose<T>(this Rand random, T a, T b, T c) {
 			return GiveMe<T>(random.Next(3), a, b, c);
 		}
-		public static T Choose<T>(this Random random, T a, T b, T c, T d) {
+		public static T Choose<T>(this Rand random, T a, T b, T c, T d) {
 			return GiveMe<T>(random.Next(4), a, b, c, d);
 		}
-		public static T Choose<T>(this Random random, T a, T b, T c, T d, T e) {
+		public static T Choose<T>(this Rand random, T a, T b, T c, T d, T e) {
 			return GiveMe<T>(random.Next(5), a, b, c, d, e);
 		}
-		public static T Choose<T>(this Random random, T a, T b, T c, T d, T e, T f) {
+		public static T Choose<T>(this Rand random, T a, T b, T c, T d, T e, T f) {
 			return GiveMe<T>(random.Next(6), a, b, c, d, e, f);
 		}
-		public static T Choose<T>(this Random random, params T[] choices) {
+		public static T Choose<T>(this Rand random, params T[] choices) {
 			return choices[random.Next(choices.Length)];
 		}
-		public static T Choose<T>(this Random random, List<T> choices) {
+		public static T Choose<T>(this Rand random, List<T> choices) {
 			return choices[random.Next(choices.Count)];
 		}
 		public static Color HexToColor(string hex) {

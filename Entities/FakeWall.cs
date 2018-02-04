@@ -29,7 +29,7 @@ namespace CelesteMap.Entities {
 			if (img == null) { return; }
 
 			ColorMatrix matrix = new ColorMatrix();
-			matrix.Matrix33 = 0.7f;
+			matrix.Matrix33 = 0.5f;
 			ImageAttributes attributes = new ImageAttributes();
 			attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
 			map.DrawImage(img, new Rectangle((int)Position.X, (int)Position.Y, img.Width, img.Height), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, attributes);
