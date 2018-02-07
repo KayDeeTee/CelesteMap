@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using CelesteMap.Utility;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class ZipMover : Entity {
 		private static readonly Color ropeColor = Util.HexToColor("663931");
@@ -15,12 +14,12 @@ namespace CelesteMap.Entities {
 			Depth = -9999;
 			Target = new Vector2(targetX, targetY);
 		}
-		public static ZipMover FromElement(XmlNode node) {
+		public static ZipMover FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int width = node.AttrInt("width", 0);
 			int height = node.AttrInt("height", 0);
-			XmlNode target = node.SelectSingleNode(".//node");
+			MapElement target = node.SelectFirst("node");
 			int targetX = target.AttrInt("x", 0);
 			int targetY = target.AttrInt("y", 0);
 

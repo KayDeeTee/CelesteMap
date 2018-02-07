@@ -1,12 +1,11 @@
 ﻿using CelesteMap.Utility;
 using System.Drawing;
-using System.Xml;
 namespace CelesteMap.Entities {
 	public class HeartGem : Entity {
 		public HeartGem() {
 			Depth = -2000000;
 		}
-		public static HeartGem FromElement(XmlNode node) {
+		public static HeartGem FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

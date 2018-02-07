@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class HangingLamp : Entity {
 		int Height;
@@ -8,7 +7,7 @@ namespace CelesteMap.Entities {
 			Height = height < 16 ? 16 : height;
 			Depth = 2000;
 		}
-		public static HangingLamp FromElement(XmlNode node) {
+		public static HangingLamp FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int height = node.AttrInt("height", 0);

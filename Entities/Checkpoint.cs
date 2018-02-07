@@ -1,13 +1,12 @@
 ﻿using CelesteMap.Utility;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Xml;
 namespace CelesteMap.Entities {
 	public class Checkpoint :Entity{
 		public Checkpoint() {
 			Depth = 0;
 		}
-		public static Checkpoint FromElement(XmlNode node) {
+		public static Checkpoint FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

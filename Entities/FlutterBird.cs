@@ -1,7 +1,6 @@
 ﻿using CelesteMap.Utility;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Xml;
 namespace CelesteMap.Entities {
 	public class FlutterBird : Entity {
 		private static readonly Color[] colors = new Color[]
@@ -14,7 +13,7 @@ namespace CelesteMap.Entities {
 		public FlutterBird() {
 			Depth = -9999;
 		}
-		public static FlutterBird FromElement(XmlNode node) {
+		public static FlutterBird FromElement(MapElement node) {
 			int x = (int)node.AttrFloat("x", 0);
 			int y = (int)node.AttrFloat("y", 0);
 

@@ -1,6 +1,5 @@
 ﻿using CelesteMap.Utility;
 using System.Drawing;
-using System.Xml;
 namespace CelesteMap.Entities {
 	public class ForsakenCityGem : Entity {
 		private HeartGem heart;
@@ -9,12 +8,12 @@ namespace CelesteMap.Entities {
 			heart.Position = new Vector2(gemX, gemY);
 			Depth = 8999;
 		}
-		public static ForsakenCityGem FromElement(XmlNode node) {
+		public static ForsakenCityGem FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int gemX = 0, gemY = 0;
 			int i = 0;
-			foreach (XmlNode child in node.ChildNodes) {
+			foreach (MapElement child in node.Children) {
 				if (i++ == 1) {
 					gemX = child.AttrInt("x", 0);
 					gemY = child.AttrInt("y", 0);

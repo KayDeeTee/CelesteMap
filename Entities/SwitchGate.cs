@@ -1,7 +1,6 @@
-﻿using System.Drawing;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 using System.Drawing.Imaging;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class SwitchGate : Entity {
 		public int Width, Height;
@@ -12,7 +11,7 @@ namespace CelesteMap.Entities {
 			Texture = texture;
 			Depth = 0;
 		}
-		public static SwitchGate FromElement(XmlNode node) {
+		public static SwitchGate FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			string texture = node.Attr("sprite", "block");

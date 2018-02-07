@@ -37,6 +37,9 @@ namespace CelesteMap.Utility {
 				}
 			}
 		}
+		public static Vector2 AngleToVector(float angleRadians, float length) {
+			return new Vector2((float)Math.Cos((double)angleRadians) * length, (float)Math.Sin((double)angleRadians) * length);
+		}
 		public static XmlDocument LoadContentXML(string filename) {
 			XmlDocument xmlDocument = new XmlDocument();
 			xmlDocument.Load(filename);

@@ -42,13 +42,17 @@ namespace CelesteMap.Backdrops {
 		public virtual void Render(Rectangle bounds, Graphics map) {
 		}
 
-		public static List<Backdrop> CreateBackdrops(XmlNode level) {
+		public static List<Backdrop> CreateBackdrops(MapElement level) {
 			List<Backdrop> list = new List<Backdrop>();
 			if (level != null) {
 				Backdrop bd = null;
-				foreach (XmlNode element in level.ChildNodes) {
+				for (int i = 0; i < level.Children.Count; i++) {
+					MapElement element = level.Children[i];
+
 					if (element.Name.Equals("apply", StringComparison.OrdinalIgnoreCase)) {
-						foreach (XmlNode child in element.ChildNodes) {
+						for (int j = 0; j < element.Children.Count; j++) {
+							MapElement child = element.Children[j];
+
 							bd = ParseBackdrop(child, element);
 							if (bd != null) {
 								list.Add(bd);
@@ -64,7 +68,7 @@ namespace CelesteMap.Backdrops {
 			return list;
 		}
 
-		private static Backdrop ParseBackdrop(XmlNode child, XmlNode above) {
+		private static Backdrop ParseBackdrop(MapElement child, MapElement above) {
 			Backdrop backdrop;
 			if (child.Name.Equals("parallax", StringComparison.OrdinalIgnoreCase)) {
 				string id = child.Attr("texture", "");

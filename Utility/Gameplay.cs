@@ -1,17 +1,16 @@
-﻿using System;
+﻿using CelesteMap.Backdrops;
+using CelesteMap.Entities;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Xml;
-using CelesteMap.Backdrops;
-using CelesteMap.Entities;
 namespace CelesteMap.Utility {
 	public class Gameplay {
 		private static Bitmap TileSet;
 		private static Dictionary<string, Sprite> Images = new Dictionary<string, Sprite>(StringComparer.OrdinalIgnoreCase);
 		private static AutoTiler foreground, background;
-		private static char DefaultTile = '1';
+		private static char DefaultTile = 'a';
 
 		static Gameplay() {
 			using (Stream stream = Util.ReadResourceStream("Resources.Gameplay0.png")) {
@@ -25,39 +24,42 @@ namespace CelesteMap.Utility {
 		public static AutoTiler GetTiler(bool bg) {
 			return bg ? background : foreground;
 		}
-		public Bitmap GenerateMap(XmlDocument xmlMap) {
-			TileGrid.DefaultBackground = Util.HexToColor("000000");//Util.HexToColor("48106e");
+		public Bitmap GenerateMap(MapElement element) {
+			string package = element.Attr("_package", "map");
+			TileGrid.DefaultBackground = Util.HexToColor("48106e");//Util.HexToColor("000000");
 
-			XmlNodeList levels = xmlMap.SelectNodes(".//levels/level");
+			List<MapElement> levels = element.Select("levels", "level");
 			Rectangle chapterBounds = GetChapterBounds(levels);
 
 			Rectangle viewport = new Rectangle(0, 0, chapterBounds.Width, chapterBounds.Height);
 			//Rectangle viewport = new Rectangle(250, 3000, 300, 200);
 			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_d3");
 			Bitmap chapter = new Bitmap(viewport.Width, viewport.Height, PixelFormat.Format32bppArgb);
-			XmlNode bgs = xmlMap.SelectSingleNode(".//Style/Backgrounds");
-			XmlNode fgs = xmlMap.SelectSingleNode(".//Style/Foregrounds");
+			MapElement bgs = element.SelectFirst("Style", "Backgrounds");
+			MapElement fgs = element.SelectFirst("Style", "Foregrounds");
 
 			background.SetLevelBounds(levels);
 			foreground.SetLevelBounds(levels);
 			string sceneryTileset = "scenery";
 			TileGrid scenery = GetTileset(sceneryTileset);
 
-			foreach (XmlNode level in levels) {
-				string name = level.Attr("name");
+			for (int i = 0; i < levels.Count; i++) {
+				MapElement level = levels[i];
+
 				int x = level.AttrInt("x", 0);
 				int y = level.AttrInt("y", 0);
 				int width = level.AttrInt("width", 0);
 				int height = level.AttrInt("height", 0);
 				int widthTiles = width / 8;
 				int heightTiles = height / 8;
+
 				Point pos = new Point(x - chapterBounds.X, y - chapterBounds.Y);
 				Point offset = new Point(pos.X - viewport.X, pos.Y - viewport.Y);
 				Rectangle levelBounds = new Rectangle(pos.X, pos.Y, width, height);
 				if (!levelBounds.IntersectsWith(viewport)) { continue; }
 
 				TileGrid tiles = GenerateLevelTiles(level, "bg", widthTiles, heightTiles, background, out VirtualMap<char> solids);
-				string tileset = level.SelectSingleNode("bgtiles").Attr("tileset", "Scenery");
+				string tileset = level.SelectFirst("bgtiles").Attr("tileset", "Scenery");
 				if (tileset.Equals("terrain", StringComparison.OrdinalIgnoreCase)) {
 					tileset = "scenery";
 				}
@@ -68,13 +70,13 @@ namespace CelesteMap.Utility {
 				tiles.Overlay(level, "bgtiles", widthTiles, heightTiles, scenery);
 
 				using (Bitmap map = tiles.DisplayMap(Backdrop.CreateBackdrops(bgs), new Rectangle(pos, chapterBounds.Size), true)) {
-					OverlayDecals(level.SelectNodes(".//bgdecals/decal"), map);
+					OverlayDecals(level.Select("bgdecals", "decal"), map);
 					tiles = GenerateLevelTiles(level, "solids", widthTiles, heightTiles, foreground, out solids);
-					OverlayEntities(level.SelectSingleNode(".//entities"), map, solids, true);
+					OverlayEntities(level.SelectFirst("entities"), map, solids, true);
 					Util.CopyTo(chapter, map, offset);
 				}
 
-				tileset = level.SelectSingleNode("fgtiles").Attr("tileset", "Scenery");
+				tileset = level.SelectFirst("fgtiles").Attr("tileset", "Scenery");
 				if (tileset.Equals("terrain", StringComparison.OrdinalIgnoreCase)) {
 					tileset = "scenery";
 				}
@@ -85,20 +87,23 @@ namespace CelesteMap.Utility {
 
 				tiles.Overlay(level, "fgtiles", widthTiles, heightTiles, scenery);
 				using (Bitmap map = tiles.DisplayMap(Backdrop.CreateBackdrops(fgs), new Rectangle(pos, chapterBounds.Size), false)) {
-					OverlayDecals(level.SelectNodes(".//fgdecals/decal"), map);
-					OverlayEntities(level.SelectSingleNode(".//entities"), map, solids, false);
+					OverlayDecals(level.Select("fgdecals", "decal"), map);
+					OverlayEntities(level.SelectFirst("entities"), map, solids, false);
 					Util.CopyTo(chapter, map, offset);
 				}
 
 				//XmlNode objtiles = level.SelectSingleNode("objtiles");
 			}
 
-			levels = xmlMap.SelectNodes(".//Filler/rect");
-			foreach (XmlNode level in levels) {
+			levels = element.Select("Filler", "rect");
+			for (int i = 0; i < levels.Count; i++) {
+				MapElement level = levels[i];
+
 				int x = level.AttrInt("x", 0);
 				int y = level.AttrInt("y", 0);
 				int width = level.AttrInt("w", 0);
 				int height = level.AttrInt("h", 0);
+
 				Point pos = new Point(x * 8 - chapterBounds.X, y * 8 - chapterBounds.Y);
 				Point offset = new Point(pos.X - viewport.X, pos.Y - viewport.Y);
 				Rectangle levelBounds = new Rectangle(pos.X, pos.Y, width, height);
@@ -111,16 +116,28 @@ namespace CelesteMap.Utility {
 			}
 			return chapter;
 		}
-		private void OverlayEntities(XmlNode entities, Bitmap map, VirtualMap<char> solids, bool background) {
+		private void OverlayEntities(MapElement entities, Bitmap map, VirtualMap<char> solids, bool background) {
 			using (Graphics g = Graphics.FromImage(map)) {
 				List<Entity> ents = new List<Entity>();
-				foreach (XmlNode child in entities) {
+				for (int i = entities.Children.Count - 1; i >= 0; i--) {
+					MapElement child = entities.Children[i];
+
 					Entity entity = null;
 					if (child.Name.IndexOf("spikes", StringComparison.OrdinalIgnoreCase) == 0) {
 						entity = background ? Spikes.FromElement(child) : null;
+					} else if (child.Name.IndexOf("triggerSpikes", StringComparison.OrdinalIgnoreCase) == 0) {
+						entity = background ? TriggerSpikes.FromElement(child) : null;
 					} else if (child.Name.IndexOf("strawberry", StringComparison.OrdinalIgnoreCase) == 0) {
 						entity = background ? Strawberry.FromElement(child) : null;
 					} else if (child.Name.Equals("goldenBerry", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? Strawberry.FromElement(child) : null;
+					} else if (child.Name.Equals("redBlocks", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? ClutterBlock.FromElement(child) : null;
+					} else if (child.Name.Equals("greenBlocks", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? ClutterBlock.FromElement(child) : null;
+					} else if (child.Name.Equals("yellowBlocks", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? ClutterBlock.FromElement(child) : null;
+					} else if (child.Name.Equals("memorialTextController", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Strawberry.FromElement(child) : null;
 					} else if (child.Name.Equals("bonfire", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Bonfire.FromElement(child) : null;
@@ -186,12 +203,14 @@ namespace CelesteMap.Utility {
 						entity = background ? InvisibleBarrier.FromElement(child) : null;
 					} else if (child.Name.Equals("payphone", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Payphone.FromElement(child) : null;
+					} else if (child.Name.Equals("spinner", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? Spinner.FromElement(child) : null;
 					} else if (child.Name.Equals("towerViewer", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? TowerViewer.FromElement(child) : null;
 					} else if (child.Name.Equals("foregroundDebris", StringComparison.OrdinalIgnoreCase)) {
 						entity = !background ? ForegroundDebris.FromElement(child) : null;
 					} else if (background) {
-						Console.WriteLine(child.Name);
+						//Console.WriteLine(child.Name);
 					}
 					if (entity != null) {
 						ents.Add(entity);
@@ -209,10 +228,11 @@ namespace CelesteMap.Utility {
 				}
 			}
 		}
-		private void OverlayDecals(XmlNodeList decals, Bitmap map) {
+		private void OverlayDecals(List<MapElement> decals, Bitmap map) {
 			if (decals.Count == 0) { return; }
 			using (Graphics g = Graphics.FromImage(map)) {
-				foreach (XmlNode decal in decals) {
+				for (int i = 0; i < decals.Count; i++) {
+					MapElement decal = decals[i];
 					string path = "decals/" + decal.Attr("texture").Replace('\\', '/');
 					path = path.Substring(0, path.Length - 4);
 
@@ -246,15 +266,15 @@ namespace CelesteMap.Utility {
 		}
 		private TileGrid GetTileset(string tilesetName) {
 			TileGrid tileset = null;
-			using (Bitmap sceneryTileset = GetImage("tilesets/" + tilesetName)) {//16 padding
+			using (Bitmap sceneryTileset = GetImage("tilesets/" + tilesetName)) {
 				tileset = new TileGrid(8, 8, sceneryTileset.Width / 8, sceneryTileset.Height / 8);
 				tileset.Load(sceneryTileset);
 			}
 			return tileset;
 		}
-		private TileGrid GenerateLevelTiles(XmlNode level, string objects, int width, int height, AutoTiler tiler, out VirtualMap<char> map) {
-			XmlNode tileData = level.SelectSingleNode(objects);
-			map = ReadMapChar(tileData == null ? string.Empty : tileData.InnerText, width, height);
+		private TileGrid GenerateLevelTiles(MapElement level, string objects, int width, int height, AutoTiler tiler, out VirtualMap<char> map) {
+			MapElement tileData = level.SelectFirst(objects);
+			map = ReadMapChar(tileData == null ? string.Empty : tileData.Attr("InnerText"), width, height);
 			return tiler.GenerateMap(map, true);
 		}
 		private VirtualMap<char> ReadMapChar(string tiles, int width, int height) {
@@ -276,17 +296,18 @@ namespace CelesteMap.Utility {
 			}
 			return mapData;
 		}
-		private Rectangle GetChapterBounds(XmlNodeList levels) {
+		private Rectangle GetChapterBounds(List<MapElement> levels) {
 			int minX = int.MaxValue, maxXW = int.MinValue, minY = int.MaxValue, maxYH = int.MinValue;
 
 			//int levelCount = 0;
-			foreach (XmlNode level in levels) {
+			for (int i = 0; i < levels.Count; i++) {
+				MapElement level = levels[i];
 				string name = level.Attr("name");
 				try {
-					int x = int.Parse(level.Attr("x"));
-					int y = int.Parse(level.Attr("y"));
-					int width = int.Parse(level.Attr("width"));
-					int height = int.Parse(level.Attr("height"));
+					int x = level.AttrInt("x", 0);
+					int y = level.AttrInt("y", 0);
+					int width = level.AttrInt("width", 0);
+					int height = level.AttrInt("height", 0);
 
 					if (x < minX) {
 						minX = x;
@@ -309,8 +330,9 @@ namespace CelesteMap.Utility {
 
 			return new Rectangle(minX, minY, maxXW - minX, maxYH - minY);
 		}
-		private Rectangle GetLevelBounds(XmlNodeList levels, Rectangle chapterBounds, string levelName) {
-			foreach (XmlNode level in levels) {
+		private Rectangle GetLevelBounds(List<MapElement> levels, Rectangle chapterBounds, string levelName) {
+			for (int i = 0; i < levels.Count; i++) {
+				MapElement level = levels[i];
 				string name = level.Attr("name");
 				if (!name.Equals(levelName, StringComparison.OrdinalIgnoreCase)) { continue; }
 

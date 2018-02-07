@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CelesteMap.Utility;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class DarkChaser : Entity {
 		public DarkChaser() {
 			Depth = -12500;
 		}
-		public static DarkChaser FromElement(XmlNode node) {
+		public static DarkChaser FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CelesteMap.Utility;
+using System;
 using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class JumpThru : Entity {
 		public static string DefaultTexture = "wood";
@@ -15,7 +14,7 @@ namespace CelesteMap.Entities {
 			Width = width;
 			Depth = -60;
 		}
-		public static JumpThru FromElement(XmlNode node) {
+		public static JumpThru FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int width = node.AttrInt("width", 0);

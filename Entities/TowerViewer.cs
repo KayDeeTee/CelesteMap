@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class TowerViewer : Entity {
 		public TowerViewer() {
 			Depth = 0;
 		}
-		public static TowerViewer FromElement(XmlNode node) {
+		public static TowerViewer FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

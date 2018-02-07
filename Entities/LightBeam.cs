@@ -1,6 +1,5 @@
 ﻿using CelesteMap.Utility;
 using System.Drawing;
-using System.Xml;
 namespace CelesteMap.Entities {
 	public class LightBeam : Entity {
 		public int Width, Height;
@@ -11,7 +10,7 @@ namespace CelesteMap.Entities {
 			Rotation = rotation;
 			Depth = -9998;
 		}
-		public static LightBeam FromElement(XmlNode node) {
+		public static LightBeam FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int width = node.AttrInt("width", 0);

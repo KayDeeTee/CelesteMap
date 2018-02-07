@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using CelesteMap.Utility;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class ForegroundDebris : Entity {
 		public ForegroundDebris() {
 			Depth = -999900;
 		}
-		public static ForegroundDebris FromElement(XmlNode node) {
+		public static ForegroundDebris FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

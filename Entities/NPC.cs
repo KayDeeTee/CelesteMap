@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CelesteMap.Utility;
+using System;
 using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class NPC : Entity {
 		public string Name;
@@ -9,7 +8,7 @@ namespace CelesteMap.Entities {
 			Name = name;
 			Depth = 1000;
 		}
-		public static NPC FromElement(XmlNode node) {
+		public static NPC FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			string name = node.Attr("npc");

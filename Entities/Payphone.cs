@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class Payphone : Entity {
 		public Payphone() {
 			Depth = 1;
 		}
-		public static Payphone FromElement(XmlNode node) {
+		public static Payphone FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

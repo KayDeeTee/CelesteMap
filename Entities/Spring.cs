@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class Spring : Entity {
 		public bool PlayerCanUse;
@@ -8,7 +7,7 @@ namespace CelesteMap.Entities {
 			PlayerCanUse = canUse;
 			Depth = -51;
 		}
-		public static Spring FromElement(XmlNode node) {
+		public static Spring FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			bool canUse = node.AttrBool("PlayerCanUse", true);

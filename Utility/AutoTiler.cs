@@ -15,6 +15,7 @@ namespace CelesteMap.Utility {
 			XmlDocument document = new XmlDocument();
 			document.LoadXml(xmlDescription);
 			Dictionary<char, XmlElement> dictionary = new Dictionary<char, XmlElement>();
+
 			foreach (object obj in document.GetElementsByTagName("Tileset")) {
 				XmlElement xmlElement = (XmlElement)obj;
 				char c = xmlElement.AttrChar("id");
@@ -23,6 +24,7 @@ namespace CelesteMap.Utility {
 				tileset.Load(tileImages);
 				TerrainType terrainType = new TerrainType(c);
 				ReadInto(terrainType, tileset, xmlElement);
+
 				if (xmlElement.HasAttr("copy")) {
 					char key = xmlElement.AttrChar("copy");
 					if (!dictionary.ContainsKey(key)) {
@@ -30,6 +32,7 @@ namespace CelesteMap.Utility {
 					}
 					ReadInto(terrainType, tileset, dictionary[key]);
 				}
+
 				if (xmlElement.HasAttr("ignores")) {
 					foreach (string text in xmlElement.Attr("ignores").Split(',')) {
 						if (text.Length > 0) {
@@ -37,17 +40,19 @@ namespace CelesteMap.Utility {
 						}
 					}
 				}
+
 				dictionary.Add(c, xmlElement);
 				lookup.Add(c, terrainType);
 			}
 		}
-		public void SetLevelBounds(XmlNodeList levels) {
+		public void SetLevelBounds(List<MapElement> levels) {
 			LevelBounds.Clear();
-			foreach (XmlNode level in levels) {
-				int x = int.Parse(level.Attr("x")) / 8;
-				int y = int.Parse(level.Attr("y")) / 8;
-				int widthTiles = int.Parse(level.Attr("width")) / 8;
-				int heightTiles = int.Parse(level.Attr("height")) / 8;
+			for (int i = 0; i < levels.Count; i++) {
+				MapElement level = levels[i];
+				int x = level.AttrInt("x", 0) / 8;
+				int y = level.AttrInt("y", 0) / 8;
+				int widthTiles = level.AttrInt("width", 0) / 8;
+				int heightTiles = level.AttrInt("height", 0) / 8;
 
 				LevelBounds.Add(new Rectangle(x, y, widthTiles, heightTiles));
 			}
@@ -372,9 +377,9 @@ namespace CelesteMap.Utility {
 			}
 			return img;
 		}
-		public void Overlay(XmlNode level, string objects, int width, int height, TileGrid tileset) {
-			XmlNode tileData = level.SelectSingleNode(objects);
-			VirtualMap<int> map = ReadMapInt(tileData == null ? string.Empty : tileData.InnerText, width, height);
+		public void Overlay(MapElement level, string objects, int width, int height, TileGrid tileset) {
+			MapElement tileData = level.SelectFirst(objects);
+			VirtualMap<int> map = ReadMapInt(tileData == null ? string.Empty : tileData.Attr("InnerText"), width, height);
 
 			if (map.Columns == 0 || map.Rows == 0) { return; }
 

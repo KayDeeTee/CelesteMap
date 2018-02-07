@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public struct SimpleCurve {
 		public Vector2 Begin, End, Control;
@@ -74,11 +73,11 @@ namespace CelesteMap.Entities {
 			curve.Control = (curve.Begin + curve.End) / 2f + new Vector2(0f, 24f);
 			Depth = (above ? -8500 : 2000);
 		}
-		public static Wire FromElement(XmlNode node) {
+		public static Wire FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			bool above = node.AttrBool("above", false);
-			XmlNode target = node.SelectSingleNode(".//node");
+			MapElement target = node.SelectFirst("node");
 			int targetX = target.AttrInt("x", 0);
 			int targetY = target.AttrInt("y", 0);
 

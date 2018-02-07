@@ -1,13 +1,12 @@
-﻿using System.Drawing;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 using System.Drawing.Imaging;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class TouchSwitch : Entity {
 		public TouchSwitch() {
 			Depth = 2000;
 		}
-		public static TouchSwitch FromElement(XmlNode node) {
+		public static TouchSwitch FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CelesteMap.Utility;
+using System;
 using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class Spikes : Entity {
 		public Direction SpikeDirection;
@@ -19,7 +18,7 @@ namespace CelesteMap.Entities {
 			Size = size;
 			Depth = -1;
 		}
-		public static Spikes FromElement(XmlNode node) {
+		public static Spikes FromElement(MapElement node) {
 			string direction = node.Name.Substring(6);
 			if (!Enum.TryParse<Direction>(direction, true, out Direction spikeDir)) { return null; }
 

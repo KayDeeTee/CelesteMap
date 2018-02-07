@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class InvisibleBarrier : Entity {
 		public int Width, Height;
@@ -9,7 +8,7 @@ namespace CelesteMap.Entities {
 			Height = height;
 			Depth = 0;
 		}
-		public static InvisibleBarrier FromElement(XmlNode node) {
+		public static InvisibleBarrier FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int width = node.AttrInt("width", 0);

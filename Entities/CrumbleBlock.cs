@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class CrumbleBlock : Entity {
 		string Texture;
@@ -10,7 +9,7 @@ namespace CelesteMap.Entities {
 			Width = width;
 			Depth = 0;
 		}
-		public static CrumbleBlock FromElement(XmlNode node) {
+		public static CrumbleBlock FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int width = node.AttrInt("width", 0);

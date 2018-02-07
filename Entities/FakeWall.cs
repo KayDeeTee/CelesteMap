@@ -1,7 +1,6 @@
-﻿using System.Drawing;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 using System.Drawing.Imaging;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class FakeWall : Entity {
 		public char TileType;
@@ -12,10 +11,10 @@ namespace CelesteMap.Entities {
 			Height = height;
 			Depth = -13000;
 		}
-		public static FakeWall FromElement(XmlNode node) {
+		public static FakeWall FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
-			char tileType = node.AttrChar("tiletype", '3');
+			char tileType = node.AttrChar("tiletype", '9');
 			int width = node.AttrInt("width", 0);
 			int height = node.AttrInt("height", 0);
 

@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class DreamMirror : Entity {
 		public DreamMirror() {
 			Depth = 9500;
 		}
-		public static DreamMirror FromElement(XmlNode node) {
+		public static DreamMirror FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

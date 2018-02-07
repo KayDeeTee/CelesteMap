@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class FloatingDebris : Entity {
 		public FloatingDebris() {
 			Depth = -5;
 		}
-		public static FloatingDebris FromElement(XmlNode node) {
+		public static FloatingDebris FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

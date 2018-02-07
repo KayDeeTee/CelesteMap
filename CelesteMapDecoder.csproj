@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Entities\CassetteBlock.cs" />
     <Compile Include="Entities\Checkpoint.cs" />
+    <Compile Include="Entities\ClutterBlock.cs" />
     <Compile Include="Entities\CoverupWall.cs" />
     <Compile Include="Entities\DarkChaser.cs" />
     <Compile Include="Entities\DashBlock.cs" />
@@ -65,9 +66,11 @@
     <Compile Include="Entities\InvisibleBarrier.cs" />
     <Compile Include="Entities\NPC.cs" />
     <Compile Include="Entities\Payphone.cs" />
+    <Compile Include="Entities\Spinner.cs" />
     <Compile Include="Entities\SwitchGate.cs" />
     <Compile Include="Entities\TouchSwitch.cs" />
     <Compile Include="Entities\TowerViewer.cs" />
+    <Compile Include="Entities\TriggerSpikes.cs" />
     <Compile Include="Utility\AutoTiler.cs" />
     <Compile Include="Backdrops\Backdrop.cs" />
     <Compile Include="Backdrops\CoreStarsFG.cs" />

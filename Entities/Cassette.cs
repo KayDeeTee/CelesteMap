@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class Cassette : Entity {
 		public Cassette() {
 			Depth = 0;
 		}
-		public static Cassette FromElement(XmlNode node) {
+		public static Cassette FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

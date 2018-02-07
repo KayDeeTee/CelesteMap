@@ -48,7 +48,7 @@
 			this.txtFilePath.Name = "txtFilePath";
 			this.txtFilePath.Size = new System.Drawing.Size(487, 20);
 			this.txtFilePath.TabIndex = 1;
-			this.txtFilePath.Text = "D:\\Steam\\steamapps\\common\\Celeste\\Content\\Maps\\2-OldSite.bin";
+			this.txtFilePath.Text = "D:\\Steam\\steamapps\\common\\Celeste\\Content\\Maps\\3-CelestialResort.bin";
 			// 
 			// map
 			// 

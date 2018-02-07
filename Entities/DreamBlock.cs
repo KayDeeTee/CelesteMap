@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Xml;
 namespace CelesteMap.Entities {
 	public class DreamBlock : Entity {
 		public int Width, Height;
@@ -15,14 +14,14 @@ namespace CelesteMap.Entities {
 			Target = target;
 			Depth = -11000;
 		}
-		public static DreamBlock FromElement(XmlNode node) {
+		public static DreamBlock FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			int width = node.AttrInt("width", 0);
 			int height = node.AttrInt("height", 0);
 			bool fast = node.AttrBool("fastMoving", false);
 			Vector2 target = new Vector2(x, y);
-			XmlNode child = node.SelectSingleNode(".//node");
+			MapElement child = node.SelectFirst("node");
 			if (child != null) {
 				target = new Vector2(node.AttrInt("x", 0), node.AttrInt("y", 0));
 			}

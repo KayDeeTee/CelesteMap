@@ -1,12 +1,11 @@
-﻿using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
+﻿using CelesteMap.Utility;
+using System.Drawing;
 namespace CelesteMap.Entities {
 	public class PlayerSpawn : Entity {
 		public PlayerSpawn() {
 			Depth = 0;
 		}
-		public static PlayerSpawn FromElement(XmlNode node) {
+		public static PlayerSpawn FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 

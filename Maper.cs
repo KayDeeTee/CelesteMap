@@ -25,8 +25,8 @@ namespace CelesteMap {
 				DecodeMap();
 
 				string fileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
-				XmlDocument xml = MapCoder.ToXML(txtFilePath.Text);
-				Bitmap chapter = gameplay.GenerateMap(xml);
+				MapElement element = MapCoder.FromBinary(txtFilePath.Text);
+				Bitmap chapter = gameplay.GenerateMap(element);
 				chapter.Save(fileName + ".png");
 
 				if (map.Image != null) {
@@ -54,8 +54,8 @@ namespace CelesteMap {
 
 			string fileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
 			string xmlName = fileName + ".xml";
-			MapCoder.ToXML(txtFilePath.Text, xmlName);
-			//MapCoder.ToBinary(xmlName, fileName + ".bin");
+			//MapCoder.ToXML(txtFilePath.Text, xmlName);
+			MapCoder.ToBinary(xmlName, fileName + ".bin");
 		}
 		private void DecodeGraphics() {
 			Directory.CreateDirectory("Images");

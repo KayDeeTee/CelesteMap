@@ -1,6 +1,5 @@
 ﻿using CelesteMap.Utility;
 using System.Drawing;
-using System.Xml;
 namespace CelesteMap.Entities {
 	public class FallingBlock : Entity {
 		public char TileType;
@@ -11,7 +10,7 @@ namespace CelesteMap.Entities {
 			Height = height;
 			Depth = behind ? 5000 : 0;
 		}
-		public static FallingBlock FromElement(XmlNode node) {
+		public static FallingBlock FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			char tileType = node.AttrChar("tiletype", '3');

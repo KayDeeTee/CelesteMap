@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CelesteMap.Utility;
+using System;
 using System.Drawing;
-using System.Xml;
-using CelesteMap.Utility;
 namespace CelesteMap.Entities {
 	public class Bonfire : Entity {
 		public Fire Type;
@@ -15,7 +14,7 @@ namespace CelesteMap.Entities {
 			Depth = -5;
 			Type = type;
 		}
-		public static Bonfire FromElement(XmlNode node) {
+		public static Bonfire FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			string mode = node.Attr("mode", "unlit");

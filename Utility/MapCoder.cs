@@ -201,14 +201,15 @@ namespace CelesteMap.Utility {
 					lookupTable[i] = binaryReader.ReadString();
 				}
 
-				element = ReadElement(binaryReader, lookupTable);
+				element = ReadElement(binaryReader, null, lookupTable);
 				element.Attributes.Add("_package", package);
 			}
 			return element;
 		}
-		private static MapElement ReadElement(BinaryReader reader, string[] lookupTable) {
+		private static MapElement ReadElement(BinaryReader reader, MapElement parent, string[] lookupTable) {
 			MapElement element = new MapElement();
 			element.Name = lookupTable[reader.ReadInt16()];
+			element.Parent = parent;
 			int attributes = reader.ReadByte();
 			for (int i = 0; i < attributes; i++) {
 				string key = lookupTable[reader.ReadInt16()];
@@ -237,7 +238,7 @@ namespace CelesteMap.Utility {
 
 			int elements = reader.ReadInt16();
 			for (int j = 0; j < elements; j++) {
-				element.Children.Add(ReadElement(reader, lookupTable));
+				element.Children.Add(ReadElement(reader, element, lookupTable));
 			}
 			return element;
 		}
