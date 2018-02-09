@@ -13,7 +13,7 @@ namespace CelesteMap.Entities {
 		public Spinner(Type type, bool attach) {
 			SpinnerType = type;
 			AttachToSolid = attach;
-			Depth = -51;
+			Depth = 0;
 		}
 		public static Spinner FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
@@ -40,12 +40,12 @@ namespace CelesteMap.Entities {
 				matrix.Matrix42 = color.B / 255f;
 				ImageAttributes attributes = new ImageAttributes();
 				attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2 + 1, (int)Position.Y - center.Height, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
-				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2 - 1, (int)Position.Y - center.Height, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
-				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2, (int)Position.Y - center.Height + 1, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
-				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2, (int)Position.Y - center.Height - 1, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
+				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2 + 1, (int)Position.Y - center.Height / 2, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
+				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2 - 1, (int)Position.Y - center.Height / 2, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
+				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2, (int)Position.Y - center.Height / 2 + 1, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
+				map.DrawImage(center, new Rectangle((int)Position.X - center.Width / 2, (int)Position.Y - center.Height / 2 - 1, center.Width, center.Height), 0, 0, center.Width, center.Height, GraphicsUnit.Pixel, attributes);
 			}
-			map.DrawImage(center, Position.X - center.Width / 2, Position.Y - center.Height);
+			map.DrawImage(center, Position.X - center.Width / 2, Position.Y - center.Height / 2);
 
 			center.Dispose();
 		}

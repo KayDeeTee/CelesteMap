@@ -24,7 +24,6 @@ namespace CelesteMap.Entities {
 		}
 		public override void Render(Graphics map, VirtualMap<char> solids) {
 			Bitmap img = Gameplay.GetImage("util/lightbeam");
-			img.Save("light.png");
 			if (img == null) { return; }
 
 			float rotation = Rotation + 90;

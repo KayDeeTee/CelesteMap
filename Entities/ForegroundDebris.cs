@@ -21,7 +21,6 @@ namespace CelesteMap.Entities {
 
 			for (int i = imgs.Count - 1; i >= 0; i--) {
 				Bitmap img = imgs[i];
-				img.Save(i + ".png");
 				map.DrawImage(img, Position.X - img.Width / 2, Position.Y - img.Height / 2);
 				img.Dispose();
 			}

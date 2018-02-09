@@ -26,14 +26,14 @@ namespace CelesteMap.Utility {
 		}
 		public Bitmap GenerateMap(MapElement element) {
 			string package = element.Attr("_package", "map");
-			TileGrid.DefaultBackground = Util.HexToColor("48106e");//Util.HexToColor("000000");
+			TileGrid.DefaultBackground = Util.HexToColor("000000"); //Util.HexToColor("48106e");//
 
 			List<MapElement> levels = element.Select("levels", "level");
 			Rectangle chapterBounds = GetChapterBounds(levels);
 
 			Rectangle viewport = new Rectangle(0, 0, chapterBounds.Width, chapterBounds.Height);
 			//Rectangle viewport = new Rectangle(250, 3000, 300, 200);
-			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_d3");
+			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_11");
 			Bitmap chapter = new Bitmap(viewport.Width, viewport.Height, PixelFormat.Format32bppArgb);
 			MapElement bgs = element.SelectFirst("Style", "Backgrounds");
 			MapElement fgs = element.SelectFirst("Style", "Foregrounds");
@@ -69,7 +69,7 @@ namespace CelesteMap.Utility {
 				}
 				tiles.Overlay(level, "bgtiles", widthTiles, heightTiles, scenery);
 
-				using (Bitmap map = tiles.DisplayMap(Backdrop.CreateBackdrops(bgs), new Rectangle(pos, chapterBounds.Size), true)) {
+				using (Bitmap map = tiles.DisplayMap(level, Backdrop.CreateBackdrops(bgs, levels), new Rectangle(pos, chapterBounds.Size), true)) {
 					OverlayDecals(level.Select("bgdecals", "decal"), map);
 					tiles = GenerateLevelTiles(level, "solids", widthTiles, heightTiles, foreground, out solids);
 					OverlayEntities(level.SelectFirst("entities"), map, solids, true);
@@ -86,7 +86,7 @@ namespace CelesteMap.Utility {
 				}
 
 				tiles.Overlay(level, "fgtiles", widthTiles, heightTiles, scenery);
-				using (Bitmap map = tiles.DisplayMap(Backdrop.CreateBackdrops(fgs), new Rectangle(pos, chapterBounds.Size), false)) {
+				using (Bitmap map = tiles.DisplayMap(level, Backdrop.CreateBackdrops(fgs, levels), new Rectangle(pos, chapterBounds.Size), false)) {
 					OverlayDecals(level.Select("fgdecals", "decal"), map);
 					OverlayEntities(level.SelectFirst("entities"), map, solids, false);
 					Util.CopyTo(chapter, map, offset);
@@ -110,7 +110,7 @@ namespace CelesteMap.Utility {
 				if (!levelBounds.IntersectsWith(viewport)) { continue; }
 
 				TileGrid tiles = foreground.GenerateOverlay(DefaultTile, 0, 0, width, height, null);
-				using (Bitmap map = tiles.DisplayMap(null, chapterBounds, false)) {
+				using (Bitmap map = tiles.DisplayMap(null, null, chapterBounds, false)) {
 					Util.CopyTo(chapter, map, pos);
 				}
 			}
@@ -143,6 +143,12 @@ namespace CelesteMap.Utility {
 						entity = background ? Bonfire.FromElement(child) : null;
 					} else if (child.Name.Equals("jumpThru", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? JumpThru.FromElement(child) : null;
+					} else if (child.Name.Equals("lamp", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? Lamp.FromElement(child) : null;
+					} else if (child.Name.Equals("hahaha", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? Haha.FromElement(child) : null;
+					} else if (child.Name.Equals("bird", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? Bird.FromElement(child) : null;
 					} else if (child.Name.Equals("memorial", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Memorial.FromElement(child) : null;
 					} else if (child.Name.Equals("player", StringComparison.OrdinalIgnoreCase)) {
@@ -210,7 +216,7 @@ namespace CelesteMap.Utility {
 					} else if (child.Name.Equals("foregroundDebris", StringComparison.OrdinalIgnoreCase)) {
 						entity = !background ? ForegroundDebris.FromElement(child) : null;
 					} else if (background) {
-						//Console.WriteLine(child.Name);
+						Console.WriteLine(child.Name);
 					}
 					if (entity != null) {
 						ents.Add(entity);
@@ -380,6 +386,18 @@ namespace CelesteMap.Utility {
 			if (!Images.TryGetValue(path, out Sprite bounds)) { return null; }
 
 			return Util.GetSubImage(TileSet, bounds);
+		}
+		public static Bitmap GetImage(string path, int index) {
+			int count = 0;
+			foreach (string key in Images.Keys) {
+				if (key.IndexOf(path, StringComparison.OrdinalIgnoreCase) == 0) {
+					if (count == index) {
+						return GetImage(key);
+					}
+					count++;
+				}
+			}
+			return null;
 		}
 		public static List<Bitmap> GetAllImages(string path) {
 			List<Bitmap> images = new List<Bitmap>();

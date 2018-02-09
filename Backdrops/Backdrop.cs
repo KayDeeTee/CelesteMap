@@ -42,24 +42,24 @@ namespace CelesteMap.Backdrops {
 		public virtual void Render(Rectangle bounds, Graphics map) {
 		}
 
-		public static List<Backdrop> CreateBackdrops(MapElement level) {
+		public static List<Backdrop> CreateBackdrops(MapElement styles, List<MapElement> levels) {
 			List<Backdrop> list = new List<Backdrop>();
-			if (level != null) {
+			if (styles != null) {
 				Backdrop bd = null;
-				for (int i = 0; i < level.Children.Count; i++) {
-					MapElement element = level.Children[i];
+				for (int i = 0; i < styles.Children.Count; i++) {
+					MapElement element = styles.Children[i];
 
 					if (element.Name.Equals("apply", StringComparison.OrdinalIgnoreCase)) {
 						for (int j = 0; j < element.Children.Count; j++) {
 							MapElement child = element.Children[j];
 
-							bd = ParseBackdrop(child, element);
+							bd = ParseBackdrop(levels, child, element);
 							if (bd != null) {
 								list.Add(bd);
 							}
 						}
 					}
-					bd = ParseBackdrop(element, null);
+					bd = ParseBackdrop(levels, element, null);
 					if (bd != null) {
 						list.Add(bd);
 					}
@@ -68,7 +68,7 @@ namespace CelesteMap.Backdrops {
 			return list;
 		}
 
-		private static Backdrop ParseBackdrop(MapElement child, MapElement above) {
+		private static Backdrop ParseBackdrop(List<MapElement> levels, MapElement child, MapElement above) {
 			Backdrop backdrop;
 			if (child.Name.Equals("parallax", StringComparison.OrdinalIgnoreCase)) {
 				string id = child.Attr("texture", "");
@@ -188,7 +188,7 @@ namespace CelesteMap.Backdrops {
 				text2 = above.Attr("exclude", "");
 			}
 			if (text2 != null) {
-				backdrop.ExcludeFrom = ParseLevelsList(text2);
+				backdrop.ExcludeFrom = ParseLevelsList(levels, text2);
 			}
 			string text3 = null;
 			if (child.HasAttr("only")) {
@@ -197,7 +197,7 @@ namespace CelesteMap.Backdrops {
 				text3 = above.Attr("only", "");
 			}
 			if (text3 != null) {
-				backdrop.OnlyIn = ParseLevelsList(text3);
+				backdrop.OnlyIn = ParseLevelsList(levels, text3);
 			}
 			string text4 = null;
 			if (child.HasAttr("flag")) {
@@ -307,7 +307,7 @@ namespace CelesteMap.Backdrops {
 			}
 			return backdrop;
 		}
-		private static HashSet<string> ParseLevelsList(string list) {
+		private static HashSet<string> ParseLevelsList(List<MapElement> levels, string list) {
 			HashSet<string> hashSet = new HashSet<string>();
 			string[] array = list.Split(',');
 			int i = 0;
@@ -316,9 +316,13 @@ namespace CelesteMap.Backdrops {
 				if (text.IndexOf('*') >= 0) {
 					string pattern = Regex.Escape(text).Replace("\\*", ".*") + "$";
 
-					//if (Regex.IsMatch(levelData.Name, pattern)) {
-					//	hashSet.Add(levelData.Name);
-					//}
+					for (int j = 0; j < levels.Count; j++) {
+						string levelName = levels[j].Attr("name");
+						if (Regex.IsMatch(levelName, pattern)) {
+							hashSet.Add(levelName);
+						}
+					}
+
 				}
 				i++;
 

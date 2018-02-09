@@ -325,7 +325,7 @@ namespace CelesteMap.Utility {
 				}
 			}
 		}
-		public Bitmap DisplayMap(List<Backdrop> backdrops, Rectangle bounds, bool before) {
+		public Bitmap DisplayMap(MapElement level, List<Backdrop> backdrops, Rectangle bounds, bool before) {
 			if (Tiles.Columns == 0 || Tiles.Rows == 0) { return null; }
 
 			Bitmap img = new Bitmap(Tiles.Columns * Width, Tiles.Rows * Height, PixelFormat.Format32bppArgb);
@@ -338,7 +338,9 @@ namespace CelesteMap.Utility {
 					if (backdrops != null) {
 						for (int i = 0; i < backdrops.Count; i++) {
 							Backdrop bd = backdrops[i];
-							bd.Render(bounds, g);
+							if (level == null || bd.IsVisible(level.Attr("name"))) {
+								bd.Render(bounds, g);
+							}
 						}
 					}
 				}
@@ -355,7 +357,9 @@ namespace CelesteMap.Utility {
 				if (!before && backdrops != null) {
 					for (int i = 0; i < backdrops.Count; i++) {
 						Backdrop bd = backdrops[i];
-						bd.Render(bounds, g);
+						if (level == null || bd.IsVisible(level.Attr("name"))) {
+							bd.Render(bounds, g);
+						}
 					}
 				}
 			}

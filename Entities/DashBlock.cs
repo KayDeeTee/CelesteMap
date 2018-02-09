@@ -28,9 +28,9 @@ namespace CelesteMap.Entities {
 		public override void Render(Graphics map, VirtualMap<char> solids) {
 			Bitmap img = null;
 			if (BlendIn) {
-				img = Gameplay.GetTiler(false).GenerateOverlay(TileType, (int)Position.X / 8, (int)Position.Y / 8, Width / 8, Height / 8, solids).DisplayMap(null, Rectangle.Empty, false);
+				img = Gameplay.GetTiler(false).GenerateOverlay(TileType, (int)Position.X / 8, (int)Position.Y / 8, Width / 8, Height / 8, solids).DisplayMap(null, null, Rectangle.Empty, false);
 			} else {
-				img = Gameplay.GetTiler(false).GenerateBox(TileType, Width / 8, Height / 8).DisplayMap(null, Rectangle.Empty, false);
+				img = Gameplay.GetTiler(false).GenerateBox(TileType, Width / 8, Height / 8).DisplayMap(null, null, Rectangle.Empty, false);
 			}
 			if (img == null) { return; }
 

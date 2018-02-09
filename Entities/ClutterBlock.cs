@@ -15,7 +15,7 @@ namespace CelesteMap.Entities {
 			Color = color;
 			Width = width;
 			Height = height;
-			Depth = 0;
+			Depth = -5;
 		}
 		public static ClutterBlock FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
@@ -33,11 +33,39 @@ namespace CelesteMap.Entities {
 
 			int widthTiles = Width / 8;
 			int heightTiles = Height / 8;
+			VirtualMap<bool> occupied = new VirtualMap<bool>(widthTiles, heightTiles, false);
 			int y = (int)Position.Y;
 			for (int j = 0; j < heightTiles; j++) {
 				int x = (int)Position.X;
 				for (int i = 0; i < widthTiles; i++) {
-					Bitmap img = Util.Random.Choose(images);
+					if (occupied[i, j]) {
+						x += 8;
+						continue;
+					}
+
+					int maxWidth = 1;
+					int maxSize = Math.Min(heightTiles - j, widthTiles - i);
+					maxSize += i;
+					for (int k = i + 1; k < maxSize; k++) {
+						if (occupied[k, j]) {
+							break;
+						}
+						maxWidth++;
+					}
+
+					Bitmap img = null;
+					do {
+						img = Util.Random.Choose(images);
+					} while (img.Width / 8 > maxWidth);
+
+					maxWidth = i + img.Width / 8;
+					int height = j + img.Height / 8;
+					for (int m = j; m < height; m++) {
+						for (int k = i; k < maxWidth; k++) {
+							occupied[k, m] = true;
+						}
+					}
+
 					map.DrawImage(img, x, y);
 					x += 8;
 				}

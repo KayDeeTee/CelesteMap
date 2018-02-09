@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Bird.cs" />
     <Compile Include="Entities\CassetteBlock.cs" />
     <Compile Include="Entities\Checkpoint.cs" />
     <Compile Include="Entities\ClutterBlock.cs" />
@@ -61,9 +62,11 @@
     <Compile Include="Entities\FlutterBird.cs" />
     <Compile Include="Entities\ForegroundDebris.cs" />
     <Compile Include="Entities\ForsakenCityGem.cs" />
+    <Compile Include="Entities\Haha.cs" />
     <Compile Include="Entities\HangingLamp.cs" />
     <Compile Include="Entities\HeartGem.cs" />
     <Compile Include="Entities\InvisibleBarrier.cs" />
+    <Compile Include="Entities\Lamp.cs" />
     <Compile Include="Entities\NPC.cs" />
     <Compile Include="Entities\Payphone.cs" />
     <Compile Include="Entities\Spinner.cs" />

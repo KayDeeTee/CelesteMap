@@ -22,7 +22,7 @@ namespace CelesteMap {
 
 		private void btnLoad_Click(object sender, EventArgs e) {
 			try {
-				DecodeMap();
+				//DecodeMap();
 
 				string fileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
 				MapElement element = MapCoder.FromBinary(txtFilePath.Text);
@@ -47,7 +47,8 @@ namespace CelesteMap {
 			//	string file = files[i];
 			//	string fileName = Path.GetFileNameWithoutExtension(file);
 			//	string xmlName = fileName + ".xml";
-			//	MapCoder.ToXML(file);
+			//	//MapElement element = MapCoder.FromBinary(file);
+			//	MapCoder.ToXML(file, xmlName);
 			//}
 			//sw.Stop();
 			//Console.WriteLine(sw.Elapsed.TotalSeconds);
