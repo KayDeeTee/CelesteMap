@@ -10,7 +10,7 @@ namespace CelesteMap.Utility {
 		private static Bitmap TileSet;
 		private static Dictionary<string, Sprite> Images = new Dictionary<string, Sprite>(StringComparer.OrdinalIgnoreCase);
 		private static AutoTiler foreground, background;
-		private static char DefaultTile = 'a';
+		private static char DefaultTile = '3';
 
 		static Gameplay() {
 			using (Stream stream = Util.ReadResourceStream("Resources.Gameplay0.png")) {
@@ -33,7 +33,7 @@ namespace CelesteMap.Utility {
 
 			Rectangle viewport = new Rectangle(0, 0, chapterBounds.Width, chapterBounds.Height);
 			//Rectangle viewport = new Rectangle(250, 3000, 300, 200);
-			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_11");
+			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_5");
 			Bitmap chapter = new Bitmap(viewport.Width, viewport.Height, PixelFormat.Format32bppArgb);
 			MapElement bgs = element.SelectFirst("Style", "Backgrounds");
 			MapElement fgs = element.SelectFirst("Style", "Foregrounds");
@@ -117,6 +117,8 @@ namespace CelesteMap.Utility {
 			return chapter;
 		}
 		private void OverlayEntities(MapElement entities, Bitmap map, VirtualMap<char> solids, bool background) {
+			CassetteBlock.Blocks.Clear();
+
 			using (Graphics g = Graphics.FromImage(map)) {
 				List<Entity> ents = new List<Entity>();
 				for (int i = entities.Children.Count - 1; i >= 0; i--) {
@@ -178,7 +180,7 @@ namespace CelesteMap.Utility {
 					} else if (child.Name.Equals("fallingBlock", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? FallingBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("cassetteBlock", StringComparison.OrdinalIgnoreCase)) {
-						//entity = background ? CassetteBlock.FromElement(child) : null;
+						entity = background ? CassetteBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("dashBlock", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? DashBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("coverupWall", StringComparison.OrdinalIgnoreCase)) {

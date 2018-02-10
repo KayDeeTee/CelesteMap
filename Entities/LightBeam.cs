@@ -26,16 +26,20 @@ namespace CelesteMap.Entities {
 			Bitmap img = Gameplay.GetImage("util/lightbeam");
 			if (img == null) { return; }
 
-			float rotation = Rotation + 90;
-			if (rotation == 90) {
+			float rotation = Rotation + 180;
+			if (rotation == 180) {
 				img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-			} else if (rotation == 180) {
-				img.RotateFlip(RotateFlipType.Rotate180FlipNone);
+				map.DrawImage(img, Position.X - Width / 2, Position.Y, Width, Height);
 			} else if (rotation == 270) {
+				img.RotateFlip(RotateFlipType.Rotate180FlipNone);
+				map.DrawImage(img, Position.X, Position.Y - Height / 2, Width, Height);
+			} else if (rotation == 0 || rotation == 360) {
 				img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+				map.DrawImage(img, Position.X - Width / 2, Position.Y - Height, Width, Height);
+			} else {
+				map.DrawImage(img, Position.X, Position.Y - Height / 2, Width, Height);
 			}
 
-			map.DrawImage(img, Position.X - Width / 2, Position.Y, Width, Height);
 			img.Dispose();
 		}
 	}
