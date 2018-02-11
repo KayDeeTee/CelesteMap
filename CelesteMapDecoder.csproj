@@ -49,15 +49,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Bird.cs" />
+    <Compile Include="Entities\BlockField.cs" />
     <Compile Include="Entities\Bridge.cs" />
     <Compile Include="Entities\BridgeFixed.cs" />
     <Compile Include="Entities\CassetteBlock.cs" />
     <Compile Include="Entities\Checkpoint.cs" />
+    <Compile Include="Entities\ClothesLine.cs" />
     <Compile Include="Entities\ClutterBlock.cs" />
+    <Compile Include="Entities\ClutterCabinet.cs" />
+    <Compile Include="Entities\ClutterDoor.cs" />
     <Compile Include="Entities\Cobweb.cs" />
+    <Compile Include="Entities\ColorSwitch.cs" />
     <Compile Include="Entities\CoverupWall.cs" />
     <Compile Include="Entities\DarkChaser.cs" />
     <Compile Include="Entities\DashBlock.cs" />
+    <Compile Include="Entities\Door.cs" />
     <Compile Include="Entities\DreamBlock.cs" />
     <Compile Include="Entities\DreamMirror.cs" />
     <Compile Include="Entities\FallingBlock.cs" />
@@ -65,6 +71,7 @@
     <Compile Include="Entities\FlutterBird.cs" />
     <Compile Include="Entities\ForegroundDebris.cs" />
     <Compile Include="Entities\ForsakenCityGem.cs" />
+    <Compile Include="Entities\FriendlyGhost.cs" />
     <Compile Include="Entities\Haha.cs" />
     <Compile Include="Entities\HangingLamp.cs" />
     <Compile Include="Entities\HeartGem.cs" />
@@ -72,14 +79,20 @@
     <Compile Include="Entities\InvisibleBarrier.cs" />
     <Compile Include="Entities\Key.cs" />
     <Compile Include="Entities\Lamp.cs" />
+    <Compile Include="Entities\LockBlock.cs" />
+    <Compile Include="Entities\MovingPlatform.cs" />
     <Compile Include="Entities\NPC.cs" />
     <Compile Include="Entities\Payphone.cs" />
     <Compile Include="Entities\ResortLantern.cs" />
+    <Compile Include="Entities\RotateSpinner.cs" />
+    <Compile Include="Entities\SinkingPlatform.cs" />
+    <Compile Include="Entities\SoundSource.cs" />
     <Compile Include="Entities\Spinner.cs" />
     <Compile Include="Entities\SwitchGate.cs" />
     <Compile Include="Entities\TouchSwitch.cs" />
     <Compile Include="Entities\TowerViewer.cs" />
     <Compile Include="Entities\TrackSpinner.cs" />
+    <Compile Include="Entities\TrapDoor.cs" />
     <Compile Include="Entities\TriggerSpikes.cs" />
     <Compile Include="Entities\Water.cs" />
     <Compile Include="Entities\WaterFall.cs" />

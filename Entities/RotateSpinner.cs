@@ -3,17 +3,17 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 namespace CelesteMap.Entities {
-	public class TrackSpinner : Entity {
+	public class RotateSpinner : Entity {
 		public enum Type {
 			Crystal,
 			Dust
 		}
 		public Type SpinnerType;
-		public TrackSpinner(Type type) {
+		public RotateSpinner(Type type) {
 			SpinnerType = type;
-			Depth = 100;
+			Depth = 0;
 		}
-		public static TrackSpinner FromElement(MapElement node) {
+		public static RotateSpinner FromElement(MapElement node) {
 			int x = node.AttrInt("x", 0);
 			int y = node.AttrInt("y", 0);
 			string levelName = node.SelectParent("level").Attr("Name");
@@ -21,7 +21,7 @@ namespace CelesteMap.Entities {
 			bool isDust = map.IndexOf("-CelestialResort", StringComparison.OrdinalIgnoreCase) > 0;
 			isDust |= map.IndexOf("-Summit", StringComparison.OrdinalIgnoreCase) > 0 && levelName.StartsWith("d-", StringComparison.OrdinalIgnoreCase);
 
-			TrackSpinner entity = new TrackSpinner(isDust ? Type.Dust : Type.Crystal);
+			RotateSpinner entity = new RotateSpinner(isDust ? Type.Dust : Type.Crystal);
 			entity.Position = new Vector2(x, y);
 			entity.ID = node.AttrInt("id", 0);
 			return entity;

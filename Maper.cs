@@ -69,7 +69,7 @@ namespace CelesteMap {
 
 			string fileName = Path.GetFileNameWithoutExtension(cboMaps.SelectedValue.ToString());
 			string xmlName = fileName + ".xml";
-			MapCoder.ToXML(cboMaps.SelectedValue.ToString(), xmlName);
+			//MapCoder.ToXML(cboMaps.SelectedValue.ToString(), xmlName);
 			//MapCoder.ToBinary(xmlName, fileName + ".bin");
 		}
 		private void DecodeGraphics() {

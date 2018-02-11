@@ -19,7 +19,7 @@ namespace CelesteMap.Entities {
 			Bitmap lantern = Gameplay.GetImage("objects/resortLantern/lantern00");
 			if (holder == null) { return; }
 
-			if (solids[(int)Position.X / 8 + 8, (int)Position.Y / 8] != solids.EmptyValue) {
+			if (solids[(int)Position.X / 8 + 1, (int)Position.Y / 8] != solids.EmptyValue) {
 				holder.RotateFlip(RotateFlipType.RotateNoneFlipX);
 				lantern.RotateFlip(RotateFlipType.RotateNoneFlipX);
 			}

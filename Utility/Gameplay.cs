@@ -33,7 +33,7 @@ namespace CelesteMap.Utility {
 
 			Rectangle viewport = new Rectangle(0, 0, chapterBounds.Width, chapterBounds.Height);
 			//Rectangle viewport = new Rectangle(250, 3000, 300, 200);
-			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_7");
+			//Rectangle viewport = GetLevelBounds(levels, chapterBounds, "lvl_08-c");
 			Bitmap chapter = new Bitmap(viewport.Width, viewport.Height, PixelFormat.Format32bppArgb);
 			MapElement bgs = element.SelectFirst("Style", "Backgrounds");
 			MapElement fgs = element.SelectFirst("Style", "Foregrounds");
@@ -139,18 +139,36 @@ namespace CelesteMap.Utility {
 						entity = background ? ClutterBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("yellowBlocks", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? ClutterBlock.FromElement(child) : null;
+					} else if (child.Name.Equals("clutterCabinet", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? ClutterCabinet.FromElement(child) : null;
 					} else if (child.Name.Equals("introCar", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? IntroCar.FromElement(child) : null;
+					} else if (child.Name.Equals("clothesLine", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? ClothesLine.FromElement(child) : null;
+					} else if (child.Name.Equals("colorSwitch", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? ColorSwitch.FromElement(child) : null;
 					} else if (child.Name.Equals("memorialTextController", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Strawberry.FromElement(child) : null;
 					} else if (child.Name.Equals("bonfire", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Bonfire.FromElement(child) : null;
+					} else if (child.Name.Equals("trapDoor", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? TrapDoor.FromElement(child) : null;
+					} else if (child.Name.Equals("movingPlatform", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? MovingPlatform.FromElement(child) : null;
+					} else if (child.Name.Equals("sinkingPlatform", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? SinkingPlatform.FromElement(child) : null;
+					} else if (child.Name.Equals("clutterDoor", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? ClutterDoor.FromElement(child) : null;
 					} else if (child.Name.Equals("bridge", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Bridge.FromElement(child) : null;
 					} else if (child.Name.Equals("bridgeFixed", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? BridgeFixed.FromElement(child) : null;
 					} else if (child.Name.Equals("jumpThru", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? JumpThru.FromElement(child) : null;
+					} else if (child.Name.Equals("door", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? Door.FromElement(child) : null;
+					} else if (child.Name.Equals("blockField", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? BlockField.FromElement(child) : null;
 					} else if (child.Name.Equals("lamp", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Lamp.FromElement(child) : null;
 					} else if (child.Name.Equals("hahaha", StringComparison.OrdinalIgnoreCase)) {
@@ -207,10 +225,16 @@ namespace CelesteMap.Utility {
 						entity = background ? NPC.FromElement(child) : null;
 					} else if (child.Name.Equals("birdForsakenCityGem", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? ForsakenCityGem.FromElement(child) : null;
+					} else if (child.Name.Equals("soundSource", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? SoundSource.FromElement(child) : null;
+					} else if (child.Name.Equals("friendlyGhost", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? FriendlyGhost.FromElement(child) : null;
 					} else if (child.Name.Equals("floatingDebris", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? FloatingDebris.FromElement(child) : null;
 					} else if (child.Name.Equals("hangingLamp", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? HangingLamp.FromElement(child) : null;
+					} else if (child.Name.Equals("lockBlock", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? LockBlock.FromElement(child) : null;
 					} else if (child.Name.Equals("heartGem", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? HeartGem.FromElement(child) : null;
 					} else if (child.Name.Equals("blackGem", StringComparison.OrdinalIgnoreCase)) {
@@ -231,6 +255,8 @@ namespace CelesteMap.Utility {
 						entity = background ? Payphone.FromElement(child) : null;
 					} else if (child.Name.Equals("spinner", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? Spinner.FromElement(child) : null;
+					} else if (child.Name.Equals("rotateSpinner", StringComparison.OrdinalIgnoreCase)) {
+						entity = background ? RotateSpinner.FromElement(child) : null;
 					} else if (child.Name.Equals("trackSpinner", StringComparison.OrdinalIgnoreCase)) {
 						entity = background ? TrackSpinner.FromElement(child) : null;
 					} else if (child.Name.Equals("towerViewer", StringComparison.OrdinalIgnoreCase)) {
