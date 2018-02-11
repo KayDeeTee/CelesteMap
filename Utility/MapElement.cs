@@ -33,7 +33,8 @@ namespace CelesteMap.Utility {
 			return elements;
 		}
 		private void SelectChildren(List<MapElement> elements, string path) {
-			for (int i = Children.Count - 1; i >= 0; i--) {
+			int count = Children.Count;
+			for (int i = 0; i < count; i++) {
 				MapElement child = Children[i];
 				if (child.Name.Equals(path, StringComparison.OrdinalIgnoreCase)) {
 					elements.Add(child);
@@ -54,7 +55,8 @@ namespace CelesteMap.Utility {
 			return element;
 		}
 		private void SelectFirst(string path, MapElement elementOn, out MapElement element) {
-			for (int i = elementOn.Children.Count - 1; i >= 0; i--) {
+			int count = elementOn.Children.Count;
+			for (int i = 0; i < count; i++) {
 				MapElement child = elementOn.Children[i];
 				if (child.Name.Equals(path, StringComparison.OrdinalIgnoreCase)) {
 					element = child;

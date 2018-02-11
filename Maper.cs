@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml;
+using System.Data;
 using CelesteMap.Utility;
 namespace CelesteMap {
 	public partial class Maper : Form {
@@ -18,14 +18,28 @@ namespace CelesteMap {
 		public Maper() {
 			InitializeComponent();
 			gameplay = new Gameplay();
+			string paths = @"D:\Steam\steamapps\common\Celeste\Content\Maps\";
+			string[] files = Directory.GetFiles(paths, "*.bin", SearchOption.AllDirectories);
+			DataTable dt = new DataTable();
+			dt.Columns.Add("Name");
+			dt.Columns.Add("Path");
+			for (int i = 0; i < files.Length; i++) {
+				string path = files[i];
+				dt.Rows.Add(Path.GetFileName(path), path);
+			}
+			cboMaps.DisplayMember = "Name";
+			cboMaps.ValueMember = "Path";
+			dt.DefaultView.Sort = "Name";
+			cboMaps.DataSource = dt;
+			cboMaps.SelectedIndex = 0;
 		}
 
 		private void btnLoad_Click(object sender, EventArgs e) {
 			try {
-				//DecodeMap();
+				DecodeMap();
 
-				string fileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
-				MapElement element = MapCoder.FromBinary(txtFilePath.Text);
+				string fileName = Path.GetFileNameWithoutExtension(cboMaps.SelectedValue.ToString());
+				MapElement element = MapCoder.FromBinary(cboMaps.SelectedValue.ToString());
 				Bitmap chapter = gameplay.GenerateMap(element);
 				chapter.Save(fileName + ".png");
 
@@ -53,10 +67,10 @@ namespace CelesteMap {
 			//sw.Stop();
 			//Console.WriteLine(sw.Elapsed.TotalSeconds);
 
-			string fileName = Path.GetFileNameWithoutExtension(txtFilePath.Text);
+			string fileName = Path.GetFileNameWithoutExtension(cboMaps.SelectedValue.ToString());
 			string xmlName = fileName + ".xml";
-			//MapCoder.ToXML(txtFilePath.Text, xmlName);
-			MapCoder.ToBinary(xmlName, fileName + ".bin");
+			MapCoder.ToXML(cboMaps.SelectedValue.ToString(), xmlName);
+			//MapCoder.ToBinary(xmlName, fileName + ".bin");
 		}
 		private void DecodeGraphics() {
 			Directory.CreateDirectory("Images");

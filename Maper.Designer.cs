@@ -24,8 +24,8 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.btnLoad = new System.Windows.Forms.Button();
-			this.txtFilePath = new System.Windows.Forms.TextBox();
 			this.map = new System.Windows.Forms.PictureBox();
+			this.cboMaps = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -34,21 +34,11 @@
 			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnLoad.Location = new System.Drawing.Point(486, -1);
 			this.btnLoad.Name = "btnLoad";
-			this.btnLoad.Size = new System.Drawing.Size(75, 22);
-			this.btnLoad.TabIndex = 0;
+			this.btnLoad.Size = new System.Drawing.Size(75, 23);
+			this.btnLoad.TabIndex = 1;
 			this.btnLoad.Text = "Load";
 			this.btnLoad.UseVisualStyleBackColor = true;
 			this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-			// 
-			// txtFilePath
-			// 
-			this.txtFilePath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtFilePath.Location = new System.Drawing.Point(0, 0);
-			this.txtFilePath.Name = "txtFilePath";
-			this.txtFilePath.Size = new System.Drawing.Size(487, 20);
-			this.txtFilePath.TabIndex = 1;
-			this.txtFilePath.Text = "D:\\Steam\\steamapps\\common\\Celeste\\Content\\Maps\\3-CelestialResort.bin";
 			// 
 			// map
 			// 
@@ -62,29 +52,37 @@
 			this.map.TabIndex = 2;
 			this.map.TabStop = false;
 			// 
+			// cboMaps
+			// 
+			this.cboMaps.FormattingEnabled = true;
+			this.cboMaps.Location = new System.Drawing.Point(0, 0);
+			this.cboMaps.Name = "cboMaps";
+			this.cboMaps.Size = new System.Drawing.Size(488, 21);
+			this.cboMaps.TabIndex = 0;
+			// 
 			// Maper
 			// 
+			this.AcceptButton = this.btnLoad;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(560, 219);
+			this.Controls.Add(this.cboMaps);
 			this.Controls.Add(this.map);
-			this.Controls.Add(this.txtFilePath);
 			this.Controls.Add(this.btnLoad);
 			this.Name = "Maper";
 			this.ShowIcon = false;
 			this.Text = "Celeste Map Maker";
 			((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
 		#endregion
 
 		private System.Windows.Forms.Button btnLoad;
-		private System.Windows.Forms.TextBox txtFilePath;
 		private System.Windows.Forms.PictureBox map;
+		private System.Windows.Forms.ComboBox cboMaps;
 	}
 }
 
